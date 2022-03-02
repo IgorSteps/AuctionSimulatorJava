@@ -81,17 +81,16 @@ public class Agent implements Iterable<Product>{
     public boolean sellProduct(double price, Product product){
         Product[] copy = new Product[products.length - 1];
         for(int i=0, j=0; i< products.length; ++i){
-            if (products[i]==product){
+            if (products[i]!=product){
                 copy[j++] = products[i];
                 money += price; //Add money
-                return true;
             }
         }
         // copy new array with n+1
         products = copy;
         // change currentSize
         currentSize = copy.length;
-        return false;
+        return true;
     }
 
     public boolean buyProduct(double price, Product product){
