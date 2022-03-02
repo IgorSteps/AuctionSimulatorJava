@@ -35,6 +35,7 @@ public class Auction {
         }
     }
 
+    // getters
     public int getNumAgents()
     {
         return agents.size();
@@ -147,7 +148,5 @@ public class Auction {
         Auction auction = new Auction(numAgents, products);
         // run 10 auctions
         auction.multipleAuctionSimulation(10);
-
-
     }
 }

@@ -11,8 +11,10 @@ import java.util.Random;
 
 public class Product implements Serializable, Comparable<Product> {
 
+    // serial version id
     private static final long serialVersionUID = 1L;
 
+    // enum
     public enum ProductType{
         WINE(0,0),
         BOOK(0,0),
@@ -54,14 +56,14 @@ public class Product implements Serializable, Comparable<Product> {
     private double salePrice;
     private String name;
 
-    //Constructor
+    // constructor
     Product(ProductType type, double salePrice, String name){
         this.type = type;
         this.salePrice = salePrice;
         this.name = name;
     }
 
-    //Accessors
+    // accessors
     public ProductType getType() {
         return type;
     }
@@ -77,7 +79,7 @@ public class Product implements Serializable, Comparable<Product> {
         return "Product of " + "type: " + getType() + ", salePrice: " + salePrice + ", name: " + name ;
     }
 
-    //Compare by sale price
+    // compare by sale price
     @Override
     public int compareTo(Product o) {
         if  (salePrice < o.salePrice)
@@ -85,7 +87,7 @@ public class Product implements Serializable, Comparable<Product> {
         else return (int) salePrice;
     }
 
-    //Compare by product type
+    // compare by product type
     public static class CompareProductType implements Comparator<Product>{
         @Override
         public int compare(Product o1, Product o2) {
@@ -93,7 +95,7 @@ public class Product implements Serializable, Comparable<Product> {
         }
     }
 
-    //Compare by product max price
+    // compare by product max price
     public static class CompareMaxPrice implements Comparator<Product>{
         @Override
         public int compare(Product o1, Product o2) {
@@ -101,23 +103,23 @@ public class Product implements Serializable, Comparable<Product> {
         }
     }
 
-    //Compare by product name
+    // compare by product name
     public static Comparator<Product> createLambda(){
         return (p1, p2) -> p1.name.compareTo(p2.name);
     }
 
     public static void main(String[] args) {
-        /************************** Task A ****************************/
+        /************************** test 1****************************/
         Product product1 = new Product(ProductType.WINE, 10, "Repin");
         Product product2 = new Product(ProductType.BOOK, 20, "War and Peace");
         Product product3 = new Product(ProductType.WHISKY, 30, "Jack Daniels");
 
-        /************************** Task B ****************************/
+        /************************** testing serializable ****************************/
         String filename1 = "product1.ser";
         String filename2 = "product2.ser";
         String filename3 = "product3.ser";
 
-        //Saving product1
+        // saving product1
         try{
             FileOutputStream fos = new FileOutputStream(filename1);
             ObjectOutputStream out = new ObjectOutputStream(fos);
@@ -128,7 +130,7 @@ public class Product implements Serializable, Comparable<Product> {
             ex.printStackTrace();
         }
 
-        //Saving product2
+        // saving product2
         try{
             FileOutputStream fos = new FileOutputStream(filename2);
             ObjectOutputStream out = new ObjectOutputStream(fos);
@@ -139,7 +141,7 @@ public class Product implements Serializable, Comparable<Product> {
             ex.printStackTrace();
         }
 
-        //Saving product3
+        // saving product3
         try{
             FileOutputStream fos = new FileOutputStream(filename3);
             ObjectOutputStream out = new ObjectOutputStream(fos);
@@ -150,26 +152,26 @@ public class Product implements Serializable, Comparable<Product> {
             ex.printStackTrace();
         }
 
-        /************************** Task C ****************************/
-        System.out.println("Task C");
+        /************************** setSalePrice test ****************************/
+        System.out.println("setSalePrice test");
         product1.setSalePrice(100);
         product2.setSalePrice(50);
         product3.setSalePrice(200);
         System.out.println(product1 + "\n" + product2 + "\n" + product3);
 
         System.out.println();
-        /************************** Task D ****************************/
+        /************************** compareTo test ****************************/
         int[] compare1Test = new int[3];
         compare1Test[0] = product1.compareTo(product2);
         compare1Test[1] = product1.compareTo(product3);
         compare1Test[2] = product2.compareTo(product3);
 
-        /************************** Task E ****************************/
+        /************************** compareProductType/compareMaxPrice test ****************************/
         Comparator<Product> compare2 = new CompareProductType();
         Comparator<Product> compare3 = new CompareMaxPrice();
         Comparator<Product> compare4 = createLambda();
 
-        /************************** Task F ****************************/
+        /************************** store results of the test above ****************************/
         int[] compare2Test = new int[3];
         compare2Test[0] = compare2.compare(product1,product2);
         compare2Test[1] = compare2.compare(product1,product3);
@@ -185,8 +187,8 @@ public class Product implements Serializable, Comparable<Product> {
         compare4Test[1] = compare4.compare(product1,product3);
         compare4Test[2] = compare4.compare(product2,product3);
 
-        /************************** Task G ****************************/
-        System.out.println("Task G");
+        /************************** comparator tests ****************************/
+        System.out.println("Comparators test");
         System.out.println("Compare by sale price");
         for (int p : compare1Test)
             System.out.println(p);
@@ -205,10 +207,10 @@ public class Product implements Serializable, Comparable<Product> {
 
 
         System.out.println();
-        /************************** Task H ****************************/
-        System.out.println("Task F");
+        /************************** serializable loading objects test ****************************/
+        System.out.println("Loading objects");
 
-        //Loading Product 1
+        // loading Product 1
         try{
             FileInputStream fis = new FileInputStream(filename1);
             ObjectInputStream in = new ObjectInputStream(fis);
@@ -220,7 +222,7 @@ public class Product implements Serializable, Comparable<Product> {
             ex.printStackTrace();
         }
 
-        //Loading Product 2
+        // loading Product 2
         try{
             FileInputStream fis = new FileInputStream(filename2);
             ObjectInputStream in = new ObjectInputStream(fis);
@@ -232,7 +234,7 @@ public class Product implements Serializable, Comparable<Product> {
             ex.printStackTrace();
         }
 
-        //Loading Product 3
+        // loading Product 3
         try{
             FileInputStream fis = new FileInputStream(filename3);
             ObjectInputStream in = new ObjectInputStream(fis);

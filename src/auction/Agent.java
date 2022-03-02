@@ -1,7 +1,4 @@
 package auction;
-
-
-
 import java.util.*;
 
 /********
@@ -53,16 +50,13 @@ public class Agent implements Iterable<Product>{
         }
     }
 
-    //Iterator
+    // iterator
     public static class ProductIterator implements Iterator<Product> {
         Product[] prod;
         int pos = 0;
-
-
         public ProductIterator(Product[] prod) {
             this.prod = prod;
         }
-
         @Override
         public boolean hasNext() {
             while (pos < prod.length ){
@@ -72,7 +66,6 @@ public class Agent implements Iterable<Product>{
             }
             return false;
         }
-
         @Override
         public Product next() {
             if (hasNext())
@@ -94,7 +87,9 @@ public class Agent implements Iterable<Product>{
                 return true;
             }
         }
+        // copy new array with n+1
         products = copy;
+        // change currentSize
         currentSize = copy.length;
         return false;
     }
@@ -109,7 +104,9 @@ public class Agent implements Iterable<Product>{
                 money -= price;
             }
             destPr[destPr.length-1] = product;
+            // copy new array with n+1
             products = destPr;
+            // change currentSize
             currentSize = destPr.length;
             return true;
         } else return false;
@@ -132,7 +129,6 @@ public class Agent implements Iterable<Product>{
         int countWine = 0;
         int countBook = 0;
         int countWhiskey = 0;
-        //System.out.println("\n products" + Arrays.toString(products));
         for (Product product : products) {
             if (product.getType().equals(Product.ProductType.WINE)) {
                 countWine++;
@@ -184,7 +180,7 @@ public class Agent implements Iterable<Product>{
 
     public static void main(String[] args) {
 
-        /************************** Task A ****************************/
+        /************************** Test 1 ****************************/
         Agent myAgent = new Agent(1000);
         myAgent.products = new Product[0];
         Product p1 = new Product(Product.ProductType.WINE, 10, "Rose");
@@ -201,7 +197,8 @@ public class Agent implements Iterable<Product>{
         myAgent.buyProduct(50, p6);
 
 
-        System.out.println("Task B");
+        /************************** Test 2 ****************************/
+        System.out.println("Iterate over and print out all products of type BOOK test");
         setCurrentProduct(Product.ProductType.BOOK);    //Set currentProduct type to BOOK
         ProductIterator iter = new ProductIterator(myAgent.products);
         while (iter.hasNext()) {
@@ -211,20 +208,21 @@ public class Agent implements Iterable<Product>{
 
         System.out.println();
 
-        System.out.println("Task C");
+        /************************** Test 3 ****************************/
+        System.out.print("Offer product test");
         myAgent.offerProduct();
         System.out.println(myAgent.offerProduct());
 
         System.out.println();
 
-        System.out.println("Task D");
-        //System.out.println(Arrays.toString(myAgent.products));      //Test
+        /************************** Test 4 ****************************/
+        System.out.println("Sell product test");
         boolean res = myAgent.sellProduct(100, myAgent.offerProduct());
         if (res) {
             System.out.println("Operation was successful");
         }  else System.out.println("Operation was unsuccessfully");
 
-        //Print remaining book objects
+        System.out.println("Print remaining products: ");
         ProductIterator iter2 = new ProductIterator(myAgent.products);
         while (iter2.hasNext())
         {
